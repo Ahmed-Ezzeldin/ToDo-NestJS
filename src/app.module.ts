@@ -3,9 +3,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TodoModule } from './todo/todo.module';
 import { UserModule } from './user/user.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { dbConfig } from './config/database.config';
 
 @Module({
-  imports: [TodoModule, UserModule],
+  // imports: [TodoModule, UserModule],
+  imports: [TodoModule, UserModule, TypeOrmModule.forRoot(dbConfig)],
   controllers: [AppController],
   providers: [AppService],
 })
