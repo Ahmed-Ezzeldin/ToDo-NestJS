@@ -1,16 +1,19 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('todos')
-export class TodoEntity {
+export class Todo {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'text' })
   title: string;
 
-  @Column()
+  @Column({ type: 'text' })
   description: string;
 
-  @Column({ default: false })
+  @Column({ type: 'boolean', default: false })
   completed: boolean;
+
+  @Column({ type: 'enum', default: 'low', enum: ['low', 'high', 'medium'] })
+  priority: string;
 }

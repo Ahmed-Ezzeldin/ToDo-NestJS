@@ -1,5 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { TodoEntity } from 'src/entity/todo.entity';
+import { Todo } from 'src/entity/todo.entity';
 import { UserEntity } from 'src/entity/user.entity';
 
 export const dbConfig: TypeOrmModuleOptions = {
@@ -11,5 +11,5 @@ export const dbConfig: TypeOrmModuleOptions = {
   database: 'Todo_db',
   synchronize: true,
   //   entities: ['dist/**/*.entity{.ts,.js}'],
-  entities: [UserEntity, TodoEntity],
+  entities: [Todo],
 };
