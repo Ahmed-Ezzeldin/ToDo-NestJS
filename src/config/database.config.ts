@@ -11,5 +11,5 @@ export const dbConfig: TypeOrmModuleOptions = {
   database: 'Todo_db',
   synchronize: true,
   //   entities: ['dist/**/*.entity{.ts,.js}'],
-  entities: [Todo],
+  entities: [Todo, User],
 };

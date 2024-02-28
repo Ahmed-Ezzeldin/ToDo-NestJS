@@ -25,7 +25,7 @@ export class TodoController {
   async findTodo(@Param('id') id: string) {
     const todo = await this.todoService.findOne(parseInt(id));
     if (!todo) {
-      throw new NotFoundException('Todo does not exist');
+      throw new NotFoundException(`Todo ${id} not found`);
     }
     return todo;
   }
@@ -39,7 +39,7 @@ export class TodoController {
   async update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
     const todo = await this.todoService.update(parseInt(id), updateTodoDto);
     if (!todo) {
-      throw new NotFoundException('Todo does not exist');
+      throw new NotFoundException(`Todo ${id} not found`);
     }
     return todo;
   }
@@ -48,8 +48,8 @@ export class TodoController {
   async delete(@Param('id') id: string) {
     const todo = await this.todoService.delete(parseInt(id));
     if (!todo) {
-      throw new NotFoundException('Todo does not exist');
+      throw new NotFoundException(`Todo ${id} not found`);
     }
-    return todo;
+    return { message: 'Todo deleted successfully' };
   }
 }
