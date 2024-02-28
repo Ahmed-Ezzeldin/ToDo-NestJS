@@ -14,9 +14,6 @@ export class TodoService {
 
   async findOne(id: number) {
     const todo = await this.todoRepo.findOne({ where: { id: id } });
-    if (!todo) {
-      return null;
-    }
     return todo;
   }
 
@@ -25,12 +22,12 @@ export class TodoService {
     return this.todoRepo.save(todo);
   }
 
-  async update(id: number, attrs: Partial<Todo>) {
+  async update(id: number, partialTodo: Partial<Todo>) {
     const todo = await this.todoRepo.findOne({ where: { id: id } });
     if (!todo) {
       return null;
     }
-    Object.assign(todo, attrs);
+    Object.assign(todo, partialTodo);
     return this.todoRepo.save(todo);
   }
 
