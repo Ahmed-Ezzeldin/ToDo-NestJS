@@ -1,17 +1,26 @@
-import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsOptional,
+  IsString,
+  MinLength,
+} from 'class-validator';
 
 export class UpdateUserDto {
-  @IsString()
   @IsOptional()
+  @IsString()
+  @MinLength(3, { message: 'Name must have atleast 3 characters.' })
   name: string;
 
+  @IsOptional()
   @IsString()
   @IsEmail({}, { message: 'Please enter a valid email address' })
-  @IsOptional()
   email: string;
 
-  @IsString()
-  @IsEnum(['male', 'female'], { message: 'Please enter your gender' })
   @IsOptional()
+  @IsString()
+  @IsEnum(['male', 'female'], {
+    message: 'Please enter your gender (male, female)',
+  })
   gender: string;
 }

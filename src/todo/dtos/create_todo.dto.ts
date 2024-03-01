@@ -6,6 +6,7 @@ export class CreateTodoDto {
   title: string;
 
   @IsString()
+  @IsNotEmpty()
   description: string;
 
   @IsBoolean()

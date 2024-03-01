@@ -14,6 +14,9 @@ export class UserDto {
   @Expose()
   gender: string;
 
+  @Expose()
+  userType: string;
+
   @Exclude()
   password: string;
 

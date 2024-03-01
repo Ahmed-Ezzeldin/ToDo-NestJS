@@ -7,21 +7,22 @@ import {
 } from 'class-validator';
 
 export class UpdateTodoDto {
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  @IsOptional()
   title: string;
 
-  @IsString()
   @IsOptional()
+  @IsString()
+  @IsNotEmpty()
   description: string;
 
   @IsBoolean()
   @IsOptional()
   completed: boolean;
 
+  @IsOptional()
   @IsString()
   @IsEnum(['low', 'high', 'medium'])
-  @IsOptional()
   priority: string;
 }

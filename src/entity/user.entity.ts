@@ -21,6 +21,9 @@ export class User {
   @Column({ type: 'enum', enum: ['male', 'female'], default: 'male' })
   gender: string;
 
+  @Column({ type: 'enum', enum: ['user', 'admin'], default: 'user' })
+  userType: string;
+
   @Column({ type: 'varchar' })
   password: string;
 

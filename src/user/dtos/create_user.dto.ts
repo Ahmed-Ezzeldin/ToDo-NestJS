@@ -1,8 +1,15 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsString,
+  MinLength,
+} from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Please enter your Name' })
+  @MinLength(3, { message: 'Name must have atleast 3 characters.' })
   name: string;
 
   @IsString()
@@ -11,7 +18,9 @@ export class CreateUserDto {
   email: string;
 
   @IsString()
-  @IsEnum(['male', 'female'], { message: 'Please enter your gender' })
+  @IsEnum(['male', 'female'], {
+    message: 'Please enter your gender (male, female)',
+  })
   gender: string;
 
   @IsString()
