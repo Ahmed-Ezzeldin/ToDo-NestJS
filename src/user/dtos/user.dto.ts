@@ -16,4 +16,10 @@ export class UserDto {
 
   @Exclude()
   password: string;
+
+  @Expose()
+  createdAt: string;
+
+  @Expose()
+  updatedAt: string;
 }
