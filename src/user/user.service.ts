@@ -19,8 +19,8 @@ export class UserService {
   }
 
   async findByEmail(email: string) {
-    const users = await this.userRepo.find({ where: { email: email } });
-    return users;
+    const user = await this.userRepo.findOne({ where: { email: email } });
+    return user;
   }
 
   async create(createUserDto: CreateUserDto) {
@@ -39,9 +39,11 @@ export class UserService {
 
   async delete(id: number) {
     const user = await this.userRepo.findOne({ where: { id: id } });
+    console.log(user);
     if (!user) {
       return null;
     }
-    return this.userRepo.delete(user);
+    await this.userRepo.delete(user);
+    return user;
   }
 }

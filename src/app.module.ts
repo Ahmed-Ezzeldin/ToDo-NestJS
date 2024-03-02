@@ -5,10 +5,16 @@ import { TodoModule } from './todo/todo.module';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dbConfig } from './config/database.config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   // imports: [TodoModule, UserModule],
-  imports: [TodoModule, UserModule, TypeOrmModule.forRoot(dbConfig)],
+  imports: [
+    TodoModule,
+    UserModule,
+    TypeOrmModule.forRoot(dbConfig),
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

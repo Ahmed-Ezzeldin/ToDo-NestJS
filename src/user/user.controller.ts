@@ -18,7 +18,7 @@ import { UserDto } from './dtos/user.dto';
 @Controller('user')
 @Serialize(UserDto)
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   findUsers() {
@@ -37,8 +37,8 @@ export class UserController {
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto) {
     // Check if user already exists
-    const users = await this.userService.findByEmail(createUserDto.email);
-    if (users.length) {
+    const user = await this.userService.findByEmail(createUserDto.email);
+    if (user) {
       throw new BadRequestException('Email already exists');
     }
 
