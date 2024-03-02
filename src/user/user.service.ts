@@ -43,7 +43,7 @@ export class UserService {
     if (!user) {
       return null;
     }
-    await this.userRepo.delete(user);
+    await this.userRepo.remove(user);
     return user;
   }
 }

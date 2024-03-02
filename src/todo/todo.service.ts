@@ -36,6 +36,6 @@ export class TodoService {
     if (!todo) {
       return null;
     }
-    return this.todoRepo.delete(todo);
+    return this.todoRepo.remove(todo);
   }
 }
