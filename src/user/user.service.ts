@@ -39,11 +39,9 @@ export class UserService {
 
   async delete(id: number) {
     const user = await this.userRepo.findOne({ where: { id: id } });
-    console.log(user);
     if (!user) {
       return null;
     }
-    await this.userRepo.remove(user);
-    return user;
+    return this.userRepo.remove(user);
   }
 }

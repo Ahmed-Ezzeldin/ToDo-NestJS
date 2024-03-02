@@ -6,14 +6,15 @@ import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dbConfig } from './config/database.config';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  // imports: [TodoModule, UserModule],
   imports: [
     TodoModule,
     UserModule,
-    TypeOrmModule.forRoot(dbConfig),
     AuthModule,
+    TypeOrmModule.forRoot(dbConfig),
+    ConfigModule.forRoot({ isGlobal: true }),
   ],
   controllers: [AppController],
   providers: [AppService],

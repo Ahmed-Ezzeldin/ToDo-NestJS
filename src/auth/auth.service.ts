@@ -24,27 +24,19 @@ export class AuthService {
 
   async signin(email: string, password: string) {
     const user = await this.userService.findByEmail(email);
-    console.log('================================');
     console.log(user);
+    console.log(process.env.JWT_SECRET);
 
-    if (!user) {
-      throw new UnauthorizedException();
-    }
     if (user.password != password) {
       throw new UnauthorizedException();
     }
-
-    console.log('================================ ' + user.email);
     const payload = {
+      sub: user.id,
       email: user.email,
-      sub: {
-        name: user.name,
-      },
     };
     return {
       ...user,
-      accessToken: 'SADSADASDSADSADASDSADSADASDSADSADASDSADSADASDSADSADASD',
-      //   accessToken: this.jwtService.sign(payload),
+      accessToken: await this.jwtService.signAsync(payload),
     };
   }
 }
