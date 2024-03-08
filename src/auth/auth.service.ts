@@ -4,6 +4,7 @@ import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/entity/user.entity';
 import { JwtService } from '@nestjs/jwt';
+import { AppLogger } from 'src/config/app_logger';
 
 @Injectable()
 export class AuthService {
@@ -24,8 +25,8 @@ export class AuthService {
 
   async signin(email: string, password: string) {
     const user = await this.userService.findByEmail(email);
-    console.log(user);
-    console.log(process.env.JWT_SECRET);
+
+    AppLogger.logDivider(user);
 
     if (user.password != password) {
       throw new UnauthorizedException();
