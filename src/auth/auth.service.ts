@@ -26,11 +26,13 @@ export class AuthService {
   async signin(email: string, password: string) {
     const user = await this.userService.findByEmail(email);
 
-    AppLogger.logDivider(user);
-
-    if (user.password != password) {
-      throw new UnauthorizedException();
+    if (!user || user.password != password) {
+      throw new UnauthorizedException({
+        message: 'Incorrect username or password!',
+        statusCode: 401,
+      });
     }
+    AppLogger.logDivider(user);
     const payload = {
       sub: user.id,
       email: user.email,
