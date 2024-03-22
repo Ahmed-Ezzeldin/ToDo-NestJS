@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UserService } from 'src/user/user.service';
-import { JwtModule, JwtService } from '@nestjs/jwt';
-import { Todo } from 'src/entity/todo.entity';
+import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
+import { AppConst } from 'src/config/app_const';
 
 @Module({
   providers: [AuthService, UserService],
@@ -14,8 +14,8 @@ import { User } from 'src/entity/user.entity';
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
       global: true,
-      // secret: process.env.JWT_SECRET,
-      secret: 'JwtSecret1234',
+      // secret: process.env.JWT_SECRET_KEY,
+      secret: AppConst.jwtSecretKey,
       signOptions: {
         expiresIn: '3600s',
       },
