@@ -15,12 +15,14 @@ import { UpdateTodoDto } from './dtos/update_todo.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Roles } from 'src/auth/role/role.decorator';
 import { Role } from 'src/auth/role/role.enum';
+import { RolesGuard } from 'src/auth/role/roles.guard';
 
 @UseGuards(AuthGuard)
 @Controller('todo')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
-
+  
+  @UseGuards(RolesGuard)
   @Roles(Role.Admin)
   @Get()
   async findAllTodos() {
