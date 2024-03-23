@@ -27,7 +27,7 @@ export class TodoController {
   @Roles(Role.Admin)
   @Get()
   async findAllTodos() {
-    AppLogger.logDivider(process.env.JWT_SECRET_KEY);
+    // AppLogger.logDivider(process.env.JWT_SECRET_KEY);
     return this.todoService.findAll();
   }
 

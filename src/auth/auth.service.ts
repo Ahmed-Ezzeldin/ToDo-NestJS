@@ -34,9 +34,9 @@ export class AuthService {
     }
     AppLogger.logDivider(user);
     const payload = {
-      sub: user.id,
+      userId: user.id,
       email: user.email,
-      roles: user.userType,
+      userType: user.userType,
     };
     return {
       ...user,
