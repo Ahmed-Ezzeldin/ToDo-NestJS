@@ -18,8 +18,8 @@ export class CreateUserDto {
   email: string;
 
   @IsString()
-  @IsEnum(['male', 'female'], {
-    message: 'Please enter your gender (male, female)',
+  @IsEnum(['male', 'female', 'notSpecified'], {
+    message: 'Please enter your gender (male, female, notSpecified)',
   })
   gender: string;
 

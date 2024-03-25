@@ -22,7 +22,7 @@ import { AppLogger } from 'src/config/app_logger';
 @Controller('todo')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
-  
+
   @UseGuards(RolesGuard)
   @Roles(Role.Admin)
   @Get()

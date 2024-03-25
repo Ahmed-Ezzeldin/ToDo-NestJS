@@ -18,7 +18,11 @@ export class User {
   @Column({ type: 'varchar' })
   email: string;
 
-  @Column({ type: 'enum', enum: ['male', 'female'], default: 'male' })
+  @Column({
+    type: 'enum',
+    enum: ['male', 'female', 'notSpecified'],
+    default: 'notSpecified',
+  })
   gender: string;
 
   @Column({ type: 'enum', enum: ['user', 'admin'], default: 'user' })
