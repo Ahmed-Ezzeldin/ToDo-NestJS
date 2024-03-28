@@ -1,9 +1,16 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/entity/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { AppLogger } from 'src/config/app_logger';
+import { SignUpDto } from './dtos/signup.dto';
+import { CreateUserDto } from 'src/user/dtos/create_user.dto';
+import { SignInDto } from './dtos/signin.dto';
 
 @Injectable()
 export class AuthService {
@@ -22,10 +29,10 @@ export class AuthService {
     return null;
   }
 
-  async signin(email: string, password: string) {
-    const user = await this.userService.findByEmail(email);
+  async signIn(signInDto: SignInDto) {
+    const user = await this.userService.findByEmail(signInDto.email);
 
-    if (!user || user.password != password) {
+    if (!user || user.password != signInDto.password) {
       throw new UnauthorizedException({
         message: 'Incorrect username or password!',
         statusCode: 401,
@@ -39,6 +46,31 @@ export class AuthService {
     };
     return {
       ...user,
+      accessToken: await this.jwtService.signAsync(payload),
+    };
+  }
+
+  async signUp(signUpDto: SignUpDto) {
+    const user = await this.userService.findByEmail(signUpDto.email);
+
+    if (user) {
+      throw new BadRequestException({
+        message: 'User already exists',
+        statusCode: 400,
+      });
+    }
+
+    var createUserDto: CreateUserDto = { ...signUpDto };
+
+    const newUser = await this.userService.create(createUserDto);
+    AppLogger.logDivider(newUser);
+    const payload = {
+      userId: newUser.id,
+      email: newUser.email,
+      userType: newUser.userType,
+    };
+    return {
+      ...newUser,
       accessToken: await this.jwtService.signAsync(payload),
     };
   }
