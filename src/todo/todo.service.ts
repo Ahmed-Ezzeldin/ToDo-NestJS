@@ -12,6 +12,10 @@ export class TodoService {
     return this.todoRepo.find();
   }
 
+  async findAllTodosByUser(userId: number) {
+    return this.todoRepo.find({ where: { userId: userId } });
+  }
+
   async findOne(id: number) {
     const todo = await this.todoRepo.findOne({ where: { id: id } });
     return todo;

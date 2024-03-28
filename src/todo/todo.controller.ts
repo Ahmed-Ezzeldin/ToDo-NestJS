@@ -16,7 +16,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { Roles } from 'src/auth/role/role.decorator';
 import { Role } from 'src/auth/role/role.enum';
 import { RolesGuard } from 'src/auth/role/roles.guard';
-
+import { GetUser, UserData } from 'src/auth/get_user.decorator';
 
 @UseGuards(AuthGuard)
 @Controller('todo')
@@ -31,6 +31,12 @@ export class TodoController {
     return this.todoService.findAll();
   }
 
+  @UseGuards(RolesGuard)
+  @Get('/user')
+  async findAllTodosByUser(@GetUser() user: UserData) {
+    return this.todoService.findAllTodosByUser(user.userId);
+  }
+
   @Get('/:id')
   async findTodo(@Param('id') id: string) {
     const todo = await this.todoService.findOne(parseInt(id));
@@ -40,8 +46,13 @@ export class TodoController {
     return todo;
   }
 
+  @UseGuards(RolesGuard)
   @Post()
-  async create(@Body() createTodoDto: CreateTodoDto) {
+  async create(
+    @GetUser() user: UserData,
+    @Body() createTodoDto: CreateTodoDto,
+  ) {
+    createTodoDto.userId = user.userId;
     return this.todoService.create(createTodoDto);
   }
 

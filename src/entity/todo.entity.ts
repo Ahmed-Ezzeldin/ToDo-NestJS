@@ -12,6 +12,9 @@ export class Todo {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column()
+  userId: number;
+
   @Column({ type: 'text' })
   title: string;
 

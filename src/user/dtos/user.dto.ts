@@ -17,8 +17,8 @@ export class UserDto {
   @Expose()
   userType: string;
 
-  // @Exclude()
-  @Expose()
+  // @Expose()
+  @Exclude()
   password: string;
 
   @Expose()
