@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/entity/user.entity';
@@ -19,25 +15,17 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, password: string) {
-    const user = await this.userService.findByEmail(email);
-    // const isCorrectPassword = await bcrypt.compare(user.password, password);
-    const isCorrectPassword = password == user.password;
-    if (user && isCorrectPassword) {
-      return user;
-    }
-    return null;
+  async hashPassword(password: string): Promise<string> {
+    const saltRound = 10;
+    const hashedPassword = bcrypt.hash(password, saltRound);
+    return hashedPassword;
   }
 
-  async signIn(signInDto: SignInDto) {
-    const user = await this.userService.findByEmail(signInDto.email);
+  async comparePassword(plaintextPassword: string, hashedPassword: string): Promise<boolean> {
+    return await bcrypt.compare(plaintextPassword, hashedPassword);
+  }
 
-    if (!user || user.password != signInDto.password) {
-      throw new UnauthorizedException({
-        message: 'Incorrect username or password!',
-        statusCode: 401,
-      });
-    }
+  async signResponse(user: User) {
     AppLogger.logDivider(user);
     const payload = {
       userId: user.id,
@@ -50,6 +38,21 @@ export class AuthService {
     };
   }
 
+  async signIn(signInDto: SignInDto) {
+    const user = await this.userService.findByEmail(signInDto.email);
+    const hashPassword = await this.hashPassword(signInDto.password);
+    const isCorrectPassword = await this.comparePassword(signInDto.password, user.password);
+    AppLogger.log(hashPassword);
+
+    if (!user || !isCorrectPassword) {
+      throw new UnauthorizedException({
+        message: 'Incorrect username or password!',
+        statusCode: 401,
+      });
+    }
+    return this.signResponse(user);
+  }
+
   async signUp(signUpDto: SignUpDto) {
     const user = await this.userService.findByEmail(signUpDto.email);
 
@@ -59,19 +62,10 @@ export class AuthService {
         statusCode: 400,
       });
     }
-
+    const hashPassword = await this.hashPassword(signUpDto.password);
     var createUserDto: CreateUserDto = { ...signUpDto };
-
+    createUserDto.password = hashPassword;
     const newUser = await this.userService.create(createUserDto);
-    AppLogger.logDivider(newUser);
-    const payload = {
-      userId: newUser.id,
-      email: newUser.email,
-      userType: newUser.userType,
-    };
-    return {
-      ...newUser,
-      accessToken: await this.jwtService.signAsync(payload),
-    };
+    return this.signResponse(newUser);
   }
 }
