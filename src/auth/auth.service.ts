@@ -7,6 +7,7 @@ import { AppLogger } from 'src/config/app_logger';
 import { SignUpDto } from './dtos/signup.dto';
 import { CreateUserDto } from 'src/user/dtos/create_user.dto';
 import { SignInDto } from './dtos/signin.dto';
+import { ChangePasswordDto } from './dtos/change_password.dto';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,7 @@ export class AuthService {
 
   async hashPassword(password: string): Promise<string> {
     const saltRound = 10;
-    const hashedPassword = bcrypt.hash(password, saltRound);
+    const hashedPassword = await bcrypt.hash(password, saltRound);
     return hashedPassword;
   }
 
@@ -40,13 +41,11 @@ export class AuthService {
 
   async signIn(signInDto: SignInDto) {
     const user = await this.userService.findByEmail(signInDto.email);
-    const hashPassword = await this.hashPassword(signInDto.password);
-    const isCorrectPassword = await this.comparePassword(signInDto.password, user.password);
-    AppLogger.log(hashPassword);
+    const isMatchPassword = await this.comparePassword(signInDto.password, user.password);
 
-    if (!user || !isCorrectPassword) {
+    if (!user || !isMatchPassword) {
       throw new UnauthorizedException({
-        message: 'Incorrect username or password!',
+        message: 'Incorrect username or password',
         statusCode: 401,
       });
     }
@@ -67,5 +66,36 @@ export class AuthService {
     createUserDto.password = hashPassword;
     const newUser = await this.userService.create(createUserDto);
     return this.signResponse(newUser);
+  }
+
+  async changePassword(changePasswordDto: ChangePasswordDto, userId: number) {
+    if (changePasswordDto.oldPassword === changePasswordDto.newPassword) {
+      throw new BadRequestException({
+        message: 'New password should not be equal to old password',
+        statusCode: 400,
+      });
+    }
+    const user = await this.userService.findOne(userId);
+    if (!user) {
+      throw new BadRequestException({
+        message: 'User not found',
+        statusCode: 400,
+      });
+    }
+
+    const isMatchPassword = await this.comparePassword(changePasswordDto.oldPassword, user.password);
+
+    if (!isMatchPassword) {
+      throw new UnauthorizedException({
+        message: 'Old password is incorrect',
+        statusCode: 401,
+      });
+    }
+    const hashedNewPassword = await this.hashPassword(changePasswordDto.newPassword);
+
+    await this.userService.update(user.id, { password: hashedNewPassword });
+    return {
+      message: 'Password changed successfully',
+    };
   }
 }

@@ -16,7 +16,8 @@ bootstrap();
 
 /*
 =============================================================
-- bind todo with the user created it
+- Send reste password email to user
+- Upload project to server
 - 
 - 
 
