@@ -27,4 +27,25 @@ export class MailService {
       AppLogger.log(error, true);
     }
   }
+
+  async sendResetPassword(user: User, optCode: string) {
+    try {
+      await this.mailerService.sendMail({
+        // to: user.email,
+        to: 'ahmed.ezzeldin.ibrahim@gmail.com',
+        from: '"Support Team" <support@example.com>',
+        subject: 'Password Reset',
+        template: './reset_password',
+        context: {
+          appName: 'TodoNestjs',
+          name: 'Hossam',
+          otpCode: optCode,
+          address: 'B451 Smart Village، ABOU RAWASH، GIZA',
+          city: 'Cairo, Egypt',
+        },
+      });
+    } catch (error) {
+      AppLogger.log(error, true);
+    }
+  }
 }
