@@ -7,25 +7,24 @@ import { User } from 'src/entity/user.entity';
 export class MailService {
   constructor(private mailerService: MailerService) {}
 
-  async sendUserConfirmation(user: User, token: string) {
+  async sendVerifyingEmail(user: User, optCode: string) {
     try {
-      //   const url = `example.com/auth/confirm?token=${token}`;
-
       await this.mailerService.sendMail({
         // to: user.email,
         to: 'ahmed.ezzeldin.ibrahim@gmail.com',
-        from: '"Support Team" <support@example.com>', // override default from
-        subject: 'Welcome to Nice App! Confirm your Email',
-        template: './confirmation', // `.hbs` extension is appended automatically
+        from: '"Support Team" <support@example.com>',
+        subject: 'Welcome to TodoNestjs',
+        template: './verifying_email',
         context: {
-          // ✏️ filling curly brackets with content
-          name: user.name,
-          url: 'https://example.com',
+          appName: 'TodoNestjs',
+          name: 'Hossam',
+          otpCode: optCode,
+          address: 'B451 Smart Village، ABOU RAWASH، GIZA',
+          city: 'Cairo, Egypt',
         },
       });
-    } catch (e) {
-        AppLogger.log("Error sending email");
-        AppLogger.log(e);
+    } catch (error) {
+      AppLogger.log(error, true);
     }
   }
 }

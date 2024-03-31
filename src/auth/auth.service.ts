@@ -51,9 +51,6 @@ export class AuthService {
         statusCode: 401,
       });
     }
-    // =================================================================
-    // await this.mailService.sendUserConfirmation(user);
-    // =================================================================
 
     return this.signResponse(user);
   }

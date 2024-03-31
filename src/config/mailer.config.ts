@@ -12,13 +12,9 @@ export const mailerConfig: MailerOptions = {
         pass: 'pawlqfcxwwbrbxya',
       },
     },
-    // defaults: {
-    //   // from: '"No Reply" <noreply@example.com>',
-    //   from: 'E-Commerce App <testing.ahmed26@gmail.com>',
-    // },
     template: {
-      dir: join(__dirname, 'templates'),
-      adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
+      dir: join(__dirname, '../mail/templates'),
+      adapter: new HandlebarsAdapter(),
       options: {
         strict: true,
       },
