@@ -16,6 +16,12 @@ export class UserDto {
 
   @Expose()
   userType: string;
+  
+  @Expose()
+  isActive: boolean;
+
+  @Expose()
+  otpCode: boolean;
 
   // @Expose()
   @Exclude()

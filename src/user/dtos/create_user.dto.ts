@@ -1,10 +1,5 @@
-import {
-  IsEmail,
-  IsEnum,
-  IsNotEmpty,
-  IsString,
-  MinLength,
-} from 'class-validator';
+import { Optional } from '@nestjs/common';
+import { IsEmail, IsEnum, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -17,6 +12,8 @@ export class CreateUserDto {
   @IsEmail({}, { message: 'Please enter a valid email address' })
   email: string;
 
+  @Optional()
+  otpCode: string;
   // @IsString()
   // @IsEnum(['male', 'female', 'notSpecified'], {
   //   message: 'Please enter your gender (male, female, notSpecified)',

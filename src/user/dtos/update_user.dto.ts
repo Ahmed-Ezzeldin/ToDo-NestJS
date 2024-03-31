@@ -12,10 +12,10 @@ export class UpdateUserDto {
   @MinLength(3, { message: 'Name must have atleast 3 characters.' })
   name: string;
 
-  @IsOptional()
-  @IsString()
-  @IsEmail({}, { message: 'Please enter a valid email address' })
-  email: string;
+  // @IsOptional()
+  // @IsString()
+  // @IsEmail({}, { message: 'Please enter a valid email address' })
+  // email: string;
 
   @IsOptional()
   @IsString()

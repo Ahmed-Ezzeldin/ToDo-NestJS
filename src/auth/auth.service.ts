@@ -28,6 +28,15 @@ export class AuthService {
     return await bcrypt.compare(plaintextPassword, hashedPassword);
   }
 
+  generateOtp(length: number): string {
+    const digits = '0123456789';
+    let otp = '';
+    for (let i = 0; i < length; i++) {
+      otp += digits[Math.floor(Math.random() * 10)];
+    }
+    return otp;
+  }
+
   async signResponse(user: User) {
     AppLogger.log(user);
     const payload = {
@@ -43,11 +52,25 @@ export class AuthService {
 
   async signIn(signInDto: SignInDto) {
     const user = await this.userService.findByEmail(signInDto.email);
-    const isMatchPassword = await this.comparePassword(signInDto.password, user.password);
 
-    if (!user || !isMatchPassword) {
+    if (!user) {
       throw new UnauthorizedException({
         message: 'Incorrect username or password',
+        statusCode: 401,
+      });
+    }
+
+    const isMatchPassword = await this.comparePassword(signInDto.password, user.password);
+    if (!isMatchPassword) {
+      throw new UnauthorizedException({
+        message: 'Incorrect username or password',
+        statusCode: 401,
+      });
+    }
+
+    if (!user.isActive) {
+      throw new UnauthorizedException({
+        message: 'Your account is not active',
         statusCode: 401,
       });
     }
@@ -64,8 +87,14 @@ export class AuthService {
         statusCode: 400,
       });
     }
+
+    const otpCode = this.generateOtp(6);
+    this.mailService.sendVerifyingEmail(user, otpCode);
     const hashPassword = await this.hashPassword(signUpDto.password);
-    var createUserDto: CreateUserDto = { ...signUpDto };
+    var createUserDto: CreateUserDto = {
+      ...signUpDto,
+      otpCode: otpCode,
+    };
     createUserDto.password = hashPassword;
     const newUser = await this.userService.create(createUserDto);
     return this.signResponse(newUser);

@@ -19,7 +19,7 @@ bootstrap();
 - Send reste password email to user
 - Check dotenv configuration
 - Upload project to server
-- 
+- Validate strong password for user
 
 
 =============================================================

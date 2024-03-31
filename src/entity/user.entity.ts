@@ -1,12 +1,4 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  Timestamp,
-  Unique,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Timestamp, Unique, UpdateDateColumn } from 'typeorm';
 
 @Entity('users')
 @Unique(['email'])
@@ -29,6 +21,12 @@ export class User {
 
   @Column({ type: 'enum', enum: ['user', 'admin'], default: 'user' })
   userType: string;
+
+  @Column({ type: 'boolean', default: false })
+  isActive: boolean;
+
+  @Column({ type: 'varchar', nullable: true })
+  otpCode: string;
 
   @Column({ type: 'varchar' })
   password: string;
