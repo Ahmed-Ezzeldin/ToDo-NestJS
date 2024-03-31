@@ -8,12 +8,14 @@ import { SignUpDto } from './dtos/signup.dto';
 import { CreateUserDto } from 'src/user/dtos/create_user.dto';
 import { SignInDto } from './dtos/signin.dto';
 import { ChangePasswordDto } from './dtos/change_password.dto';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private jwtService: JwtService,
+    private mailService: MailService,
   ) {}
 
   async hashPassword(password: string): Promise<string> {
@@ -49,6 +51,11 @@ export class AuthService {
         statusCode: 401,
       });
     }
+    // =================================================================
+    const token = Math.floor(1000 + Math.random() * 9000).toString();
+    await this.mailService.sendUserConfirmation(user, token);
+    // =================================================================
+
     return this.signResponse(user);
   }
 

@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
 import { AppConst } from 'src/config/app_const';
+import { MailModule } from 'src/mail/mail.module';
 
 @Module({
   providers: [AuthService, UserService],
@@ -20,6 +21,7 @@ import { AppConst } from 'src/config/app_const';
         expiresIn: '3600s',
       },
     }),
+    MailModule,
   ],
 })
 export class AuthModule {}

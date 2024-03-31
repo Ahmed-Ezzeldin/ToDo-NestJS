@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { dbConfig } from './config/database.config';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ConfigModule } from '@nestjs/config';
     AuthModule,
     TypeOrmModule.forRoot(dbConfig),
     ConfigModule.forRoot({ isGlobal: true }),
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
