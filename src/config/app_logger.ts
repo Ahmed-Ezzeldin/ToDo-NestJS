@@ -5,8 +5,16 @@ export class AppLogger {
   }
 
   ///================================================================== log
-  static log(object: any) {
-    this.defaultLog(object);
+  static log(object: any, isError: boolean = false) {
+    if (isError) {
+      this.defaultLog('\x1B[31m═══════════════════════════════════════════════════════════════ ❗Error❗\x1B[0m\n');
+      this.defaultLog(object);
+      this.defaultLog('\n\x1B[31m═══════════════════════════════════════════════════════════════ ❗Error❗\x1B[0m');
+    } else {
+      this.defaultLog('\x1B[35m═══════════════════════════════════════════════════════════════\x1B[0m\n');
+      this.defaultLog(object);
+      this.defaultLog('\n\x1B[35m═══════════════════════════════════════════════════════════════\x1B[0m');
+    }
   }
 
   ///================================================================== log Color
@@ -14,27 +22,7 @@ export class AppLogger {
     console.log(this.getColor(color), object, '\x1b[0m');
   }
 
-  ///================================================================== log Color (Json)
-  // static logJsonColor(object: any, color: string = 'green') {
-  //   console.log(
-  //     this.getColor(color),
-  //     JSON.stringify(object, null, 5),
-  //     '\x1b[0m',
-  //   );
-  // }
-
-  ///================================================================== log Divider
-  static logDivider(object: any) {
-    const divider =
-      '\x1B[35m════════════════════════════════════════════════════════════════════════════════════════════════';
-    this.defaultLog(divider);
-    this.defaultLog('\n');
-    this.defaultLog(object);
-    this.defaultLog('\n');
-    this.defaultLog(divider);
-  }
-
-  ///================================================================== Default log
+  ///================================================================== Get Color
   private static getColor(color: string): string {
     const colorsMap = new Map<string, string>([
       // ----------------------- Text colors

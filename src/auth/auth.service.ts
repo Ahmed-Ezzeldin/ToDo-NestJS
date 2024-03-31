@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   async signResponse(user: User) {
-    AppLogger.logDivider(user);
+    AppLogger.log(user);
     const payload = {
       userId: user.id,
       email: user.email,
@@ -52,8 +52,10 @@ export class AuthService {
       });
     }
     // =================================================================
-    const token = Math.floor(1000 + Math.random() * 9000).toString();
-    await this.mailService.sendUserConfirmation(user, token);
+    // await this.mailService.sendUserConfirmation(user);
+    AppLogger.log('errorss');
+    AppLogger.log('errorss22', true);
+
     // =================================================================
 
     return this.signResponse(user);
