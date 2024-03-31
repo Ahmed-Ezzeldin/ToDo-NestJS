@@ -7,20 +7,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
 import { AppConst } from 'src/config/app_const';
 import { MailModule } from 'src/mail/mail.module';
+import { jwtConfig } from 'src/config/jwt.config';
 
 @Module({
   providers: [AuthService, UserService],
   controllers: [AuthController],
   imports: [
     TypeOrmModule.forFeature([User]),
-    JwtModule.register({
-      global: true,
-      // secret: process.env.JWT_SECRET_KEY,
-      secret: AppConst.jwtSecretKey,
-      signOptions: {
-        expiresIn: '3600s',
-      },
-    }),
+    JwtModule.register(jwtConfig),
     MailModule,
   ],
 })

@@ -4,24 +4,6 @@ export class AppLogger {
     console.log(object);
   }
 
-  ///================================================================== log
-  static log(object: any, isError: boolean = false) {
-    if (isError) {
-      this.defaultLog('\x1B[31m═══════════════════════════════════════════════════════════════ ❗Error❗\x1B[0m\n');
-      this.defaultLog(object);
-      this.defaultLog('\n\x1B[31m═══════════════════════════════════════════════════════════════ ❗Error❗\x1B[0m');
-    } else {
-      this.defaultLog('\x1B[35m═══════════════════════════════════════════════════════════════\x1B[0m\n');
-      this.defaultLog(object);
-      this.defaultLog('\n\x1B[35m═══════════════════════════════════════════════════════════════\x1B[0m');
-    }
-  }
-
-  ///================================================================== log Color
-  static logColor(object: any, color: string = 'green') {
-    console.log(this.getColor(color), object, '\x1b[0m');
-  }
-
   ///================================================================== Get Color
   private static getColor(color: string): string {
     const colorsMap = new Map<string, string>([
@@ -46,5 +28,23 @@ export class AppLogger {
       ['back8', '\x1B[47m'],
     ]);
     return colorsMap.get(color);
+  }
+
+  ///================================================================== log
+  static log(object: any, isError: boolean = false) {
+    if (isError) {
+      this.defaultLog('\x1B[31m═══════════════════════════════════════════════════════════════ ❗Error❗\x1B[0m\n');
+      this.defaultLog(object);
+      this.defaultLog('\n\x1B[31m═══════════════════════════════════════════════════════════════ ❗Error❗\x1B[0m');
+    } else {
+      this.defaultLog('\x1B[35m═══════════════════════════════════════════════════════════════\x1B[0m\n');
+      this.defaultLog(object);
+      this.defaultLog('\n\x1B[35m═══════════════════════════════════════════════════════════════\x1B[0m');
+    }
+  }
+
+  ///================================================================== log Color
+  static logColor(object: any, color: string = 'green') {
+    console.log(this.getColor(color), object, '\x1b[0m');
   }
 }

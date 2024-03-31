@@ -53,9 +53,6 @@ export class AuthService {
     }
     // =================================================================
     // await this.mailService.sendUserConfirmation(user);
-    AppLogger.log('errorss');
-    AppLogger.log('errorss22', true);
-
     // =================================================================
 
     return this.signResponse(user);
