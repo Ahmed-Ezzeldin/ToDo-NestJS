@@ -20,7 +20,9 @@ bootstrap();
 - Check dotenv configuration
 - Upload project to server
 - Validate strong password for user
-
+- Integrate with swagger
+- 
+- 
 
 =============================================================
 =============================================================

@@ -14,6 +14,7 @@ export class CreateUserDto {
 
   @Optional()
   otpCode: string;
+
   // @IsString()
   // @IsEnum(['male', 'female', 'notSpecified'], {
   //   message: 'Please enter your gender (male, female, notSpecified)',

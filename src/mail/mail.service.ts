@@ -10,14 +10,13 @@ export class MailService {
   async sendVerifyingEmail(user: User, optCode: string) {
     try {
       await this.mailerService.sendMail({
-        // to: user.email,
-        to: 'ahmed.ezzeldin.ibrahim@gmail.com',
+        to: user.email,
         from: '"Support Team" <support@example.com>',
         subject: 'Welcome to TodoNestjs',
         template: './verifying_email',
         context: {
           appName: 'TodoNestjs',
-          name: 'Hossam',
+          name: user.name,
           otpCode: optCode,
           address: 'B451 Smart Village، ABOU RAWASH، GIZA',
           city: 'Cairo, Egypt',
@@ -31,14 +30,13 @@ export class MailService {
   async sendResetPassword(user: User, optCode: string) {
     try {
       await this.mailerService.sendMail({
-        // to: user.email,
-        to: 'ahmed.ezzeldin.ibrahim@gmail.com',
+        to: user.email,
         from: '"Support Team" <support@example.com>',
-        subject: 'Password Reset',
+        subject: 'Reset Password',
         template: './reset_password',
         context: {
           appName: 'TodoNestjs',
-          name: 'Hossam',
+          name: user.name,
           otpCode: optCode,
           address: 'B451 Smart Village، ABOU RAWASH، GIZA',
           city: 'Cairo, Egypt',

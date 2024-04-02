@@ -9,6 +9,8 @@ import { CreateUserDto } from 'src/user/dtos/create_user.dto';
 import { SignInDto } from './dtos/signin.dto';
 import { ChangePasswordDto } from './dtos/change_password.dto';
 import { MailService } from 'src/mail/mail.service';
+import { VerifyEmailDto } from './dtos/verify_email.dto';
+import { join } from 'path';
 
 @Injectable()
 export class AuthService {
@@ -55,7 +57,7 @@ export class AuthService {
 
     if (!user) {
       throw new UnauthorizedException({
-        message: 'Incorrect username or password',
+        message: 'Incorrect email or password',
         statusCode: 401,
       });
     }
@@ -63,7 +65,7 @@ export class AuthService {
     const isMatchPassword = await this.comparePassword(signInDto.password, user.password);
     if (!isMatchPassword) {
       throw new UnauthorizedException({
-        message: 'Incorrect username or password',
+        message: 'Incorrect email or password',
         statusCode: 401,
       });
     }
@@ -89,7 +91,6 @@ export class AuthService {
     }
 
     const otpCode = this.generateOtp(6);
-    this.mailService.sendVerifyingEmail(user, otpCode);
     const hashPassword = await this.hashPassword(signUpDto.password);
     var createUserDto: CreateUserDto = {
       ...signUpDto,
@@ -97,6 +98,7 @@ export class AuthService {
     };
     createUserDto.password = hashPassword;
     const newUser = await this.userService.create(createUserDto);
+    await this.mailService.sendVerifyingEmail(newUser, otpCode);
     return this.signResponse(newUser);
   }
 
@@ -128,6 +130,29 @@ export class AuthService {
     await this.userService.update(user.id, { password: hashedNewPassword });
     return {
       message: 'Password changed successfully',
+    };
+  }
+
+  async verifyEmail(verifyEmailDto: VerifyEmailDto) {
+    const user = await this.userService.findByEmail(verifyEmailDto.email);
+    if (!user) {
+      throw new UnauthorizedException({
+        message: 'User does not exist',
+        statusCode: 401,
+      });
+    }
+
+    if (user.otpCode !== verifyEmailDto.otpCode) {
+      throw new UnauthorizedException({
+        message: 'Otp code is incorrect',
+        statusCode: 401,
+      });
+    }
+    user.otpCode = '';
+    user.isActive = true;
+    await this.userService.update(user.id, user);
+    return {
+      message: 'Email verified successfully',
     };
   }
 }
