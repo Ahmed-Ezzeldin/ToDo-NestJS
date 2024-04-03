@@ -21,6 +21,9 @@ bootstrap();
 - Upload project to server
 - Validate strong password for user
 - Integrate with swagger
+- Localizarion (En, Ar)
+- Prevent user enter extar values in requests body 
+- 
 - 
 - 
 

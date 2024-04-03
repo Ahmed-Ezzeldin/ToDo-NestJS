@@ -11,6 +11,7 @@ import { ChangePasswordDto } from './dtos/change_password.dto';
 import { MailService } from 'src/mail/mail.service';
 import { VerifyEmailDto } from './dtos/verify_email.dto';
 import { join } from 'path';
+import { ForgetPasswordDto } from './dtos/forget_assword.dto';
 
 @Injectable()
 export class AuthService {
@@ -20,6 +21,15 @@ export class AuthService {
     private mailService: MailService,
   ) {}
 
+  generateOtp(length: number): string {
+    const digits = '0123456789';
+    let otp = '';
+    for (let i = 0; i < length; i++) {
+      otp += digits[Math.floor(Math.random() * 10)];
+    }
+    return otp;
+  }
+
   async hashPassword(password: string): Promise<string> {
     const saltRound = 10;
     const hashedPassword = await bcrypt.hash(password, saltRound);
@@ -28,15 +38,6 @@ export class AuthService {
 
   async comparePassword(plaintextPassword: string, hashedPassword: string): Promise<boolean> {
     return await bcrypt.compare(plaintextPassword, hashedPassword);
-  }
-
-  generateOtp(length: number): string {
-    const digits = '0123456789';
-    let otp = '';
-    for (let i = 0; i < length; i++) {
-      otp += digits[Math.floor(Math.random() * 10)];
-    }
-    return otp;
   }
 
   async signResponse(user: User) {
@@ -102,6 +103,48 @@ export class AuthService {
     return this.signResponse(newUser);
   }
 
+  async verifyEmail(verifyEmailDto: VerifyEmailDto) {
+    const user = await this.userService.findByEmail(verifyEmailDto.email);
+    if (!user) {
+      throw new UnauthorizedException({
+        message: 'User does not exist',
+        statusCode: 401,
+      });
+    }
+
+    if (user.otpCode !== verifyEmailDto.otpCode) {
+      throw new UnauthorizedException({
+        message: 'Otp code is incorrect',
+        statusCode: 401,
+      });
+    }
+    user.otpCode = '';
+    user.isActive = true;
+    await this.userService.update(user.id, user);
+    return {
+      message: 'Email verified successfully',
+    };
+  }
+
+  async forgetPassword(forgetPasswordDto: ForgetPasswordDto) {
+    const user = await this.userService.findByEmail(forgetPasswordDto.email);
+    if (!user) {
+      throw new UnauthorizedException({
+        message: 'User does not exist',
+        statusCode: 401,
+      });
+    }
+
+    const otpCode = this.generateOtp(6);
+    user.otpCode = otpCode;
+
+    await this.mailService.sendResetPassword(user, otpCode);
+    await this.userService.update(user.id, user);
+    return {
+      message: 'Otp Code sent to your email',
+    };
+  }
+
   async changePassword(changePasswordDto: ChangePasswordDto, userId: number) {
     if (changePasswordDto.oldPassword === changePasswordDto.newPassword) {
       throw new BadRequestException({
@@ -130,29 +173,6 @@ export class AuthService {
     await this.userService.update(user.id, { password: hashedNewPassword });
     return {
       message: 'Password changed successfully',
-    };
-  }
-
-  async verifyEmail(verifyEmailDto: VerifyEmailDto) {
-    const user = await this.userService.findByEmail(verifyEmailDto.email);
-    if (!user) {
-      throw new UnauthorizedException({
-        message: 'User does not exist',
-        statusCode: 401,
-      });
-    }
-
-    if (user.otpCode !== verifyEmailDto.otpCode) {
-      throw new UnauthorizedException({
-        message: 'Otp code is incorrect',
-        statusCode: 401,
-      });
-    }
-    user.otpCode = '';
-    user.isActive = true;
-    await this.userService.update(user.id, user);
-    return {
-      message: 'Email verified successfully',
     };
   }
 }
