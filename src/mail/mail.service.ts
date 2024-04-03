@@ -27,13 +27,13 @@ export class MailService {
     }
   }
 
-  async sendResetPassword(user: User, optCode: string) {
+  async sendResetPasswordOtp(user: User, optCode: string) {
     try {
       await this.mailerService.sendMail({
         to: user.email,
         from: '"Support Team" <support@example.com>',
         subject: 'Reset Password',
-        template: './reset_password',
+        template: './reset_password_otp',
         context: {
           appName: 'TodoNestjs',
           name: user.name,

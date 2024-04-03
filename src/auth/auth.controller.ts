@@ -8,6 +8,7 @@ import { RolesGuard } from './role/roles.guard';
 import { AuthGuard } from './auth.guard';
 import { VerifyEmailDto } from './dtos/verify_email.dto';
 import { ForgetPasswordDto } from './dtos/forget_assword.dto';
+import { ResetPasswordDto } from './dtos/reset_assword.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -31,6 +32,11 @@ export class AuthController {
   @Post('forgetPassword')
   async forgetPassword(@Body() body: ForgetPasswordDto) {
     return this.authService.forgetPassword(body);
+  }
+
+  @Post('resetPassword')
+  async resetPassword(@Body() body: ResetPasswordDto) {
+    return this.authService.resetPassword(body);
   }
 
   @UseGuards(AuthGuard)

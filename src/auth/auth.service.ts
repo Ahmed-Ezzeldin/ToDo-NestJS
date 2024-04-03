@@ -12,6 +12,7 @@ import { MailService } from 'src/mail/mail.service';
 import { VerifyEmailDto } from './dtos/verify_email.dto';
 import { join } from 'path';
 import { ForgetPasswordDto } from './dtos/forget_assword.dto';
+import { ResetPasswordDto } from './dtos/reset_assword.dto';
 
 @Injectable()
 export class AuthService {
@@ -138,10 +139,35 @@ export class AuthService {
     const otpCode = this.generateOtp(6);
     user.otpCode = otpCode;
 
-    await this.mailService.sendResetPassword(user, otpCode);
-    await this.userService.update(user.id, user);
+    await Promise.all([this.mailService.sendResetPasswordOtp(user, otpCode), this.userService.update(user.id, user)]);
     return {
       message: 'Otp Code sent to your email',
+    };
+  }
+
+  async resetPassword(resetPasswordDto: ResetPasswordDto) {
+    const user = await this.userService.findByEmail(resetPasswordDto.email);
+    if (!user) {
+      throw new UnauthorizedException({
+        message: 'User does not exist',
+        statusCode: 401,
+      });
+    }
+
+    if (user.otpCode !== resetPasswordDto.otpCode) {
+      throw new UnauthorizedException({
+        message: 'Otp code is incorrect',
+        statusCode: 401,
+      });
+    }
+
+    const hashPassword = await this.hashPassword(resetPasswordDto.newPassword);
+    user.otpCode = '';
+    user.password = hashPassword;
+
+    await this.userService.update(user.id, user);
+    return {
+      message: 'Password reset successfully',
     };
   }
 
