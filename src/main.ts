@@ -20,7 +20,7 @@ async function bootstrap() {
 bootstrap();
 
 /*
-============================================================= Basic  Architecture
+============================================================= Directory Structure
 
 |
 ├── src

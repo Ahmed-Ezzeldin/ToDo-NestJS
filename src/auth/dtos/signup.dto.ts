@@ -1,11 +1,5 @@
-import { Optional } from '@nestjs/common';
-import {
-  IsEmail,
-  IsEnum,
-  IsNotEmpty,
-  IsString,
-  MinLength,
-} from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MinLength, Validate } from 'class-validator';
+import { StrongPassword } from 'src/core/validation/strong_password_validator';
 
 export class SignUpDto {
   @IsString()
@@ -17,7 +11,13 @@ export class SignUpDto {
   @IsEmail({}, { message: 'Please enter a valid email address' })
   email: string;
 
+  @IsOptional()
+  @IsEnum(['male', 'female', 'notSpecified'], {
+    message: 'Please enter your gender (male, female, notSpecified)',
+  })
+  gender: string;
+
   @IsString()
-  @MinLength(8, { message: 'Password must have atleast 8 characters.' })
+  @Validate(StrongPassword)
   password: string;
 }

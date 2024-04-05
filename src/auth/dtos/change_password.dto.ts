@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, Validate } from 'class-validator';
+import { StrongPassword } from 'src/core/validation/strong_password_validator';
 
 export class ChangePasswordDto {
   @IsString()
@@ -6,6 +7,6 @@ export class ChangePasswordDto {
   oldPassword: string;
 
   @IsString()
-  @MinLength(8, { message: 'Password must have atleast 8 characters.' })
+  @Validate(StrongPassword)
   newPassword: string;
 }
