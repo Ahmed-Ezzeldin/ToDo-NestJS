@@ -1,6 +1,6 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
-import { AppLogger } from 'src/config/app_logger';
+import { AppLogger } from 'src/core/config/app_logger';
 import { User } from 'src/entity/user.entity';
 
 @Injectable()

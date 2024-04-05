@@ -12,7 +12,7 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create_user.dto';
 import { UpdateUserDto } from './dtos/update_user.dto';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { Serialize } from 'src/core/interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 
 @Controller('user')

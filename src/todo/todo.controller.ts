@@ -12,10 +12,10 @@ import {
 import { TodoService } from './todo.service';
 import { CreateTodoDto } from './dtos/create_todo.dto';
 import { UpdateTodoDto } from './dtos/update_todo.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { Roles } from 'src/auth/role/role.decorator';
-import { Role } from 'src/auth/role/role.enum';
-import { RolesGuard } from 'src/auth/role/roles.guard';
+import { AuthGuard } from 'src/auth/guard/auth.guard';
+import { Roles } from 'src/auth/guard/role.decorator';
+import { Role } from 'src/auth/guard/role.enum';
+import { RolesGuard } from 'src/auth/guard/roles.guard';
 import { GetUser, UserData } from 'decorators/get_user.decorator';
 
 @UseGuards(AuthGuard)

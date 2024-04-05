@@ -5,9 +5,8 @@ import { UserService } from 'src/user/user.service';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
-import { AppConst } from 'src/config/app_const';
-import { MailModule } from 'src/mail/mail.module';
-import { jwtConfig } from 'src/config/jwt.config';
+import { MailModule } from 'src/core/services/mail/mail.module';
+import { jwtConfig } from 'src/core/config/jwt.config';
 
 @Module({
   providers: [AuthService, UserService],

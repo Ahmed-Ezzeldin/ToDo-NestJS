@@ -3,14 +3,13 @@ import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/entity/user.entity';
 import { JwtService } from '@nestjs/jwt';
-import { AppLogger } from 'src/config/app_logger';
+import { AppLogger } from 'src/core/config/app_logger';
 import { SignUpDto } from './dtos/signup.dto';
 import { CreateUserDto } from 'src/user/dtos/create_user.dto';
 import { SignInDto } from './dtos/signin.dto';
 import { ChangePasswordDto } from './dtos/change_password.dto';
-import { MailService } from 'src/mail/mail.service';
+import { MailService } from 'src/core/services/mail/mail.service';
 import { VerifyEmailDto } from './dtos/verify_email.dto';
-import { join } from 'path';
 import { ForgetPasswordDto } from './dtos/forget_assword.dto';
 import { ResetPasswordDto } from './dtos/reset_assword.dto';
 

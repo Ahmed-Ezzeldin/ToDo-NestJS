@@ -20,18 +20,47 @@ async function bootstrap() {
 bootstrap();
 
 /*
-=============================================================
-- Send reste password email to user
+============================================================= Basic  Architecture
+
+|
+├── src
+|   ├── app.controller.ts
+|   ├── app.module.ts
+|   ├── app.service.ts
+|   ├── main.ts
+|   |   
+|   |── auth
+|   |   ├── dtos
+|   |   ├── guard
+|   |   └── helpers
+|   |   
+|   |── core
+|   |   ├── services
+|   |   |   ├── mail
+|   |   |   └── temp
+|   |   |
+|   |   ├── interceptors
+|   |   ├── validation
+|   |   └── config
+|   |       ├── app_const.ts
+|   |       └── app_logger.ts
+|   |   
+|   |── entity
+|   |   ├── user.entity.ts
+|   |   └── todo.entity.ts
+|   |   
+|   |── user
+|   |── todo
+
+
+============================================================= Todos
 - Check dotenv configuration
 - Upload project to server
-- Validate strong password for user
 - Integrate with swagger
 - Localizarion (En, Ar)
-- Prevent user enter extar values in requests body 
-- 
-- 
 - 
 
+=============================================================
 =============================================================
 =============================================================
 */
