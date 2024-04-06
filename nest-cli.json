@@ -7,6 +7,10 @@
       {
         "include": "core/services/mail/templates/**/*",
         "outDir": "dist/src"
+      },
+      {
+        "include": "core/services/i18n/**/*",
+        "outDir": "dist/src"
       }
     ],
     "watchAssets": true,

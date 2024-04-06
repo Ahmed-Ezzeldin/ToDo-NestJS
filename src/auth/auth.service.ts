@@ -12,6 +12,7 @@ import { MailService } from 'src/core/services/mail/mail.service';
 import { VerifyEmailDto } from './dtos/verify_email.dto';
 import { ForgetPasswordDto } from './dtos/forget_assword.dto';
 import { ResetPasswordDto } from './dtos/reset_assword.dto';
+import { I18nContext } from 'nestjs-i18n/dist/i18n.context';
 
 @Injectable()
 export class AuthService {
@@ -20,6 +21,10 @@ export class AuthService {
     private jwtService: JwtService,
     private mailService: MailService,
   ) {}
+
+  private get i18n(): I18nContext {
+    return I18nContext.current();
+  }
 
   generateOtp(length: number): string {
     const digits = '0123456789';
@@ -138,7 +143,10 @@ export class AuthService {
     const otpCode = this.generateOtp(6);
     user.otpCode = otpCode;
 
-    await Promise.all([this.mailService.sendResetPasswordOtp(user, otpCode), this.userService.update(user.id, user)]);
+    await Promise.allSettled([
+      this.mailService.sendResetPasswordOtp(user, otpCode),
+      this.userService.update(user.id, user),
+    ]);
     return {
       message: 'Otp Code sent to your email',
     };
@@ -199,5 +207,9 @@ export class AuthService {
     return {
       message: 'Password changed successfully',
     };
+  }
+
+  testTransition() {
+    return this.i18n.t('test.Hello');
   }
 }

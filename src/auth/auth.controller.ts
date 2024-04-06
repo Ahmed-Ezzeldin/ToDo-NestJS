@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dtos/signin.dto';
 import { SignUpDto } from './dtos/signup.dto';
@@ -8,6 +8,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { VerifyEmailDto } from './dtos/verify_email.dto';
 import { ForgetPasswordDto } from './dtos/forget_assword.dto';
 import { ResetPasswordDto } from './dtos/reset_assword.dto';
+import { I18n, I18nContext } from 'nestjs-i18n';
 
 @Controller('auth')
 export class AuthController {
@@ -43,4 +44,16 @@ export class AuthController {
   async changePassword(@Body() body: ChangePasswordDto, @GetUser() user: UserData) {
     return this.authService.changePassword(body, user.userId);
   }
+
+  @Get('testTransition')
+  async testTransition() {
+    return this.authService.testTransition();
+  }
+
+  // @Post('signin')
+  // async signIn(@Body() body: SignInDto, @I18n() i18n: I18nContext) {
+  //   // return i18n.t('click', { lang: I18nContext.current().lang });
+  //   // return "Helloww";
+  //   return i18n.t('Hello', { lang: "fr" });
+  // }
 }
