@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { SignInDto } from './dtos/signin.dto';
 import { SignUpDto } from './dtos/signup.dto';
 import { ChangePasswordDto } from './dtos/change_password.dto';
-import { GetUser, UserData } from '../../decorators/get_user.decorator';
+import { GetUser, UserData } from './guard/get_user.decorator';
 import { AuthGuard } from './guard/auth.guard';
 import { VerifyEmailDto } from './dtos/verify_email.dto';
 import { ForgetPasswordDto } from './dtos/forget_assword.dto';

@@ -2,7 +2,7 @@ import { MailerOptions } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
 
-export const mailerConfig: MailerOptions = {
+export const mailerOptions: MailerOptions = {
   transport: {
     host: 'smtp.gmail.com',
     port: 465,
@@ -13,7 +13,8 @@ export const mailerConfig: MailerOptions = {
     },
   },
   template: {
-    dir: join(__dirname, '../services/mail/templates'),
+    // dir: join(__dirname, '../services/mail/templates'),
+    dir: join(__dirname, 'templates'),
     adapter: new HandlebarsAdapter(),
     options: {
       strict: true,

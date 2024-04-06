@@ -6,11 +6,10 @@ import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dbConfig } from './core/config/database.config';
 import { AuthModule } from './auth/auth.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { MailModule } from './core/services/mail/mail.module';
 import { I18nModule } from 'nestjs-i18n/dist/i18n.module';
-import { join } from 'path';
-import { AcceptLanguageResolver, HeaderResolver, QueryResolver } from 'nestjs-i18n';
+import { i18nOptions } from './core/services/i18n/i18n.options';
 
 @Module({
   imports: [
@@ -20,30 +19,7 @@ import { AcceptLanguageResolver, HeaderResolver, QueryResolver } from 'nestjs-i1
     TypeOrmModule.forRoot(dbConfig),
     ConfigModule.forRoot({ isGlobal: true }),
     MailModule,
-    // I18nModule.forRoot({
-    //   fallbackLanguage: 'en',
-    //   loaderOptions: {
-    //     path: join(__dirname, '/core/services/i18n/'),
-    //     watch: true,
-    //   },
-    //   resolvers: [{ use: QueryResolver, options: ['lang'] }, AcceptLanguageResolver],
-    // }),
-    I18nModule.forRootAsync({
-      useFactory: () => ({
-        fallbackLanguage: 'en',
-        loaderOptions: {
-          // path: join(__dirname, '/i18n/'),
-          path: join(__dirname, '/core/services/i18n/'),
-          watch: true,
-        },
-      }),
-      resolvers: [
-        { use: QueryResolver, options: ['lang'] },
-        new HeaderResolver(['x-custom-lang']),
-        AcceptLanguageResolver,
-      ],
-      inject: [ConfigService],
-    }),
+    I18nModule.forRootAsync(i18nOptions),
   ],
   controllers: [AppController],
   providers: [AppService],

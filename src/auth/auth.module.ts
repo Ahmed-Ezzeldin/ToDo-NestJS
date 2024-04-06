@@ -6,14 +6,14 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
 import { MailModule } from 'src/core/services/mail/mail.module';
-import { jwtConfig } from 'src/core/config/jwt.config';
+import { jwtOptions } from 'src/auth/jwt.options';
 
 @Module({
   providers: [AuthService, UserService],
   controllers: [AuthController],
   imports: [
     TypeOrmModule.forFeature([User]),
-    JwtModule.register(jwtConfig),
+    JwtModule.register(jwtOptions),
     MailModule,
   ],
 })

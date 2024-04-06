@@ -16,7 +16,7 @@ import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { Roles } from 'src/auth/guard/role.decorator';
 import { Role } from 'src/auth/guard/role.enum';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
-import { GetUser, UserData } from 'decorators/get_user.decorator';
+import { GetUser, UserData } from 'src/auth/guard/get_user.decorator';
 
 @UseGuards(AuthGuard)
 @Controller('todo')
