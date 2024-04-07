@@ -63,7 +63,7 @@ export class AuthService {
 
     if (!user) {
       throw new UnauthorizedException({
-        message: 'Incorrect email or password',
+        message: this.i18n.t('messages.Incorrect_Email_Password'),
         statusCode: 401,
       });
     }
@@ -71,14 +71,14 @@ export class AuthService {
     const isMatchPassword = await this.comparePassword(signInDto.password, user.password);
     if (!isMatchPassword) {
       throw new UnauthorizedException({
-        message: 'Incorrect email or password',
+        message: this.i18n.t('messages.Incorrect_Email_Password'),
         statusCode: 401,
       });
     }
 
     if (!user.isActive) {
       throw new UnauthorizedException({
-        message: 'Your account is not active',
+        message: this.i18n.t('messages.Account_Not_Active'),
         statusCode: 401,
       });
     }
@@ -91,7 +91,7 @@ export class AuthService {
 
     if (user) {
       throw new BadRequestException({
-        message: 'User already exists',
+        message: this.i18n.t('messages.User_Exists'),
         statusCode: 400,
       });
     }
@@ -112,14 +112,15 @@ export class AuthService {
     const user = await this.userService.findByEmail(verifyEmailDto.email);
     if (!user) {
       throw new UnauthorizedException({
-        message: 'User does not exist',
+        message: this.i18n.t('messages.User_Not_Exist'),
         statusCode: 401,
       });
     }
 
     if (user.otpCode !== verifyEmailDto.otpCode) {
       throw new UnauthorizedException({
-        message: 'Otp code is incorrect',
+        message: this.i18n.t('messages.Incorrect_OTP'),
+
         statusCode: 401,
       });
     }
@@ -127,7 +128,7 @@ export class AuthService {
     user.isActive = true;
     await this.userService.update(user.id, user);
     return {
-      message: 'Email verified successfully',
+      message: this.i18n.t('messages.Email_Verified'),
     };
   }
 
@@ -135,7 +136,7 @@ export class AuthService {
     const user = await this.userService.findByEmail(forgetPasswordDto.email);
     if (!user) {
       throw new UnauthorizedException({
-        message: 'User does not exist',
+        message: this.i18n.t('messages.User_Not_Exist'),
         statusCode: 401,
       });
     }
@@ -148,7 +149,7 @@ export class AuthService {
       this.userService.update(user.id, user),
     ]);
     return {
-      message: 'Otp Code sent to your email',
+      message: this.i18n.t('messages.Otp_Sent'),
     };
   }
 
@@ -156,14 +157,14 @@ export class AuthService {
     const user = await this.userService.findByEmail(resetPasswordDto.email);
     if (!user) {
       throw new UnauthorizedException({
-        message: 'User does not exist',
+        message: this.i18n.t('messages.User_Not_Exist'),
         statusCode: 401,
       });
     }
 
     if (user.otpCode !== resetPasswordDto.otpCode) {
       throw new UnauthorizedException({
-        message: 'Otp code is incorrect',
+        message: this.i18n.t('messages.Incorrect_OTP'),
         statusCode: 401,
       });
     }
@@ -174,21 +175,21 @@ export class AuthService {
 
     await this.userService.update(user.id, user);
     return {
-      message: 'Password reset successfully',
+      message: this.i18n.t('messages.Password_Reset'),
     };
   }
 
   async changePassword(changePasswordDto: ChangePasswordDto, userId: number) {
     if (changePasswordDto.oldPassword === changePasswordDto.newPassword) {
       throw new BadRequestException({
-        message: 'New password should not be equal to old password',
+        message: this.i18n.t('messages.New_Password_Should_Not_Equal'),
         statusCode: 400,
       });
     }
     const user = await this.userService.findOne(userId);
     if (!user) {
       throw new BadRequestException({
-        message: 'User not found',
+        message: this.i18n.t('messages.User_Not_Found'),
         statusCode: 400,
       });
     }
@@ -197,7 +198,7 @@ export class AuthService {
 
     if (!isMatchPassword) {
       throw new UnauthorizedException({
-        message: 'Old password is incorrect',
+        message: this.i18n.t('messages.Old_Password_Incorrect'),
         statusCode: 401,
       });
     }
@@ -205,11 +206,7 @@ export class AuthService {
 
     await this.userService.update(user.id, { password: hashedNewPassword });
     return {
-      message: 'Password changed successfully',
+      message: this.i18n.t('messages.Password_Changed'),
     };
-  }
-
-  testTransition() {
-    return this.i18n.t('test.Hello');
   }
 }

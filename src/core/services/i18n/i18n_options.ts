@@ -6,8 +6,7 @@ export const i18nOptions: I18nAsyncOptions = {
   useFactory: () => ({
     fallbackLanguage: 'en',
     loaderOptions: {
-      // path: join(__dirname, '/core/services/i18n/'),
-      path: join(__dirname, ''),
+      path: join(__dirname, '../i18n/'),
       watch: true,
     },
   }),

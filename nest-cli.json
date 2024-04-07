@@ -9,8 +9,7 @@
         "outDir": "dist/src"
       },
       {
-        "include": "core/services/i18n/**/*",
-        "outDir": "dist/src"
+        "include": "core/services/i18n/**/*"
       }
     ],
     "watchAssets": true,

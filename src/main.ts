@@ -57,7 +57,6 @@ bootstrap();
 - Check dotenv configuration
 - Upload project to server
 - Integrate with swagger
-- Localizarion (En, Ar)
 - 
 
 =============================================================

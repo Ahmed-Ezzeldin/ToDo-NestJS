@@ -1,0 +1,21 @@
+{
+  "Hello": "مرحبا بالعالم بالعربية",
+  "Incorrect_Email_Password": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+  "Account_Not_Active": "حسابك غير نشط",
+  "User_Exists": "المستخدم موجود بالفعل",
+  "User_Not_Exist": "المستخدم غير موجود",
+  "Incorrect_OTP": "رمز OTP غير صحيح",
+  "Email_Verified": "تم التحقق من البريد الإلكتروني بنجاح",
+  "Otp_Sent": "تم إرسال رمز OTP إلى بريدك الإلكتروني",
+  "Password_Reset": "إعادة تعيين كلمة المرور بنجاح",
+  "New_Password_Should_Not_Equal": "يجب ألا تكون كلمة المرور الجديدة مساوية لكلمة المرور القديمة",
+  "Old_Password_Incorrect": "كلمة المرور القديمة غير صحيحة",
+  "Password_Changed": "تم تغيير كلمة المرور بنجاح",
+  "User_Not_Found": "المستخدم {userId} غير موجود",
+  "Email_Exists": "البريد الإلكتروني موجود بالفعل",
+  "User_Deleted": "تم حذف المستخدم بنجاح",
+  "Todo_Not_Found": "المهمة {todoId} غير موجودة",
+  "Todo_deleted": "تم حذف المهمة بنجاح",
+  "AAAAAAAA": "AAAAAAAA",
+  "LAST": "LAST"
+}

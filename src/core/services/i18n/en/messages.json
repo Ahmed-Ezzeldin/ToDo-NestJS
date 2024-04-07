@@ -1,0 +1,21 @@
+{
+    "Hello": "Hello World English",
+    "Incorrect_Email_Password": "Incorrect email or password",
+    "Account_Not_Active": "Your account is not active",
+    "User_Exists": "User already exists",
+    "User_Not_Exist": "User does not exist",
+    "Incorrect_OTP": "Otp code is incorrect",
+    "Email_Verified": "Email verified successfully",
+    "Otp_Sent": "Otp Code sent to your email",
+    "Password_Reset": "Password reset successfully",
+    "New_Password_Should_Not_Equal": "New password should not be equal to old password",
+    "Old_Password_Incorrect": "Old password is incorrect",
+    "Password_Changed": "Password changed successfully",
+    "User_Not_Found": "User {userId} not found",
+    "Email_Exists": "Email already exists",
+    "User_Deleted": "User deleted successfully",
+    "Todo_Not_Found": "Todo {todoId} not found",
+    "Todo_deleted": "Todo deleted successfully",
+    "AAAAAAAA": "AAAAAAAA",
+    "LAST": "LAST"
+}
