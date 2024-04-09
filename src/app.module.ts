@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { TodoModule } from './todo/todo.module';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { dbConfig } from './core/config/database.config';
+import { dbConfig } from './core/config/database_config';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { MailModule } from './core/services/mail/mail.module';

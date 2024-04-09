@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import * as dotenv from 'dotenv';
+import { SwaggerModule } from '@nestjs/swagger';
+import { swaggerOptions } from './core/config/swagger_options';
 
 async function bootstrap() {
   dotenv.config(); // Load environment variables from .env file
@@ -12,6 +14,9 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+  const document = SwaggerModule.createDocument(app, swaggerOptions);
+  SwaggerModule.setup('api', app, document);
+
   app.setGlobalPrefix('api/v1/');
   await app.listen(3000).then(() => {
     console.log('successfully stared on port 3000');
@@ -56,7 +61,6 @@ bootstrap();
 ============================================================= Todos
 - Check dotenv configuration
 - Upload project to server
-- Integrate with swagger
 - 
 
 =============================================================

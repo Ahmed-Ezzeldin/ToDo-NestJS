@@ -8,8 +8,10 @@ import { Role } from 'src/auth/guard/role.enum';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
 import { GetUser, UserData } from 'src/auth/guard/get_user.decorator';
 import { I18nContext } from 'nestjs-i18n/dist/i18n.context';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard)
+@ApiTags('todo')
 @Controller('todo')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
@@ -57,6 +59,9 @@ export class TodoController {
     return todo;
   }
 
+
+  @ApiResponse({ status: 200, description: 'Todo deleted successfully' })
+  @ApiResponse({ status: 404, description: 'Not Found' })
   @Delete('/:id')
   async delete(@Param('id') id: string) {
     const todo = await this.todoService.delete(parseInt(id));

@@ -8,7 +8,9 @@ import { AuthGuard } from './guard/auth.guard';
 import { VerifyEmailDto } from './dtos/verify_email.dto';
 import { ForgetPasswordDto } from './dtos/forget_assword.dto';
 import { ResetPasswordDto } from './dtos/reset_assword.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
