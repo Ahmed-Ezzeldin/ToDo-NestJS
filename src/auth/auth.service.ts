@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/modules/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/entity/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { AppLogger } from 'src/core/config/app_logger';
 import { SignUpDto } from './dtos/signup.dto';
-import { CreateUserDto } from 'src/user/dtos/create_user.dto';
+import { CreateUserDto } from 'src/modules/user/dtos/create_user.dto';
 import { SignInDto } from './dtos/signin.dto';
 import { ChangePasswordDto } from './dtos/change_password.dto';
 import { MailService } from 'src/core/services/mail/mail.service';
