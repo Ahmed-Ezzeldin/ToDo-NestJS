@@ -13,6 +13,7 @@ import { VerifyEmailDto } from './dtos/verify_email.dto';
 import { ForgetPasswordDto } from './dtos/forget_assword.dto';
 import { ResetPasswordDto } from './dtos/reset_assword.dto';
 import { I18nContext } from 'nestjs-i18n/dist/i18n.context';
+import { RandomHelper } from 'src/core/helpers/random_helper';
 
 @Injectable()
 export class AuthService {
@@ -24,15 +25,6 @@ export class AuthService {
 
   private get i18n(): I18nContext {
     return I18nContext.current();
-  }
-
-  generateOtp(length: number): string {
-    const digits = '0123456789';
-    let otp = '';
-    for (let i = 0; i < length; i++) {
-      otp += digits[Math.floor(Math.random() * 10)];
-    }
-    return otp;
   }
 
   async hashPassword(password: string): Promise<string> {
@@ -96,7 +88,7 @@ export class AuthService {
       });
     }
 
-    const otpCode = this.generateOtp(6);
+    const otpCode = RandomHelper.generateOtpCode(6);
     const hashPassword = await this.hashPassword(signUpDto.password);
     var createUserDto: CreateUserDto = {
       ...signUpDto,
@@ -141,7 +133,7 @@ export class AuthService {
       });
     }
 
-    const otpCode = this.generateOtp(6);
+    const otpCode = RandomHelper.generateOtpCode(6);
     user.otpCode = otpCode;
 
     await Promise.allSettled([
