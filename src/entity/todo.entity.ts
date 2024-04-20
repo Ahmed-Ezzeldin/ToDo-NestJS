@@ -1,11 +1,5 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  Timestamp,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Priority } from 'src/enums/priority_enum';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from 'typeorm';
 
 @Entity('todos')
 export class Todo {
@@ -24,8 +18,8 @@ export class Todo {
   @Column({ type: 'boolean', default: false })
   completed: boolean;
 
-  @Column({ type: 'enum', default: 'low', enum: ['low', 'high', 'medium'] })
-  priority: string;
+  @Column({ type: 'enum', enum: Priority, default: Priority.LOW })
+  priority: Priority;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Timestamp;

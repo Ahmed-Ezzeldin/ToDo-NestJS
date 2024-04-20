@@ -1,11 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsBoolean,
-  IsEnum,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsBoolean, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { Priority } from 'src/enums/priority_enum';
 
 export class UpdateTodoDto {
   @ApiProperty()
@@ -25,9 +20,8 @@ export class UpdateTodoDto {
   @IsOptional()
   completed: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ enum: Priority, enumName: 'Priority', required: false })
+  @IsEnum(Priority)
   @IsOptional()
-  @IsString()
-  @IsEnum(['low', 'high', 'medium'])
-  priority: string;
+  priority?: Priority;
 }

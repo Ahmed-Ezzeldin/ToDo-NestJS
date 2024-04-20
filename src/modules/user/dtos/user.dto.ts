@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
-import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
 
 export class UserDto {
   @ApiProperty()
@@ -31,9 +30,9 @@ export class UserDto {
   @Expose()
   otpCode: boolean;
 
-  // @Expose()
   @ApiProperty()
   @Exclude()
+  // @Expose()
   password: string;
 
   @ApiProperty()
