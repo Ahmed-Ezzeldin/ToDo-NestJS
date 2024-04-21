@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
+import { GenderEnum } from 'src/enums/gender_enum';
 
 export class UserDto {
   @ApiProperty()
@@ -16,7 +17,7 @@ export class UserDto {
 
   @ApiProperty()
   @Expose()
-  gender: string;
+  gender: GenderEnum;
 
   @ApiProperty()
   @Expose()

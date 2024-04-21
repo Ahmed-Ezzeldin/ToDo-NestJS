@@ -1,15 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsEmail,
-  IsEnum,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  IsStrongPassword,
-  MinLength,
-  Validate,
-} from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MinLength, Validate } from 'class-validator';
 import { StrongPassword } from 'src/core/validation/strong_password_validator';
+import { GenderEnum } from 'src/enums/gender_enum';
 
 export class SignUpDto {
   @ApiProperty()
@@ -23,12 +15,12 @@ export class SignUpDto {
   @IsEmail({}, { message: 'Please enter a valid email address' })
   email: string;
 
-  @ApiProperty()
+  @ApiProperty({ enum: GenderEnum, enumName: 'Gender' })
   @IsOptional()
-  @IsEnum(['male', 'female', 'notSpecified'], {
+  @IsEnum(GenderEnum, {
     message: 'Please enter your gender (male, female, notSpecified)',
   })
-  gender: string;
+  gender: GenderEnum;
 
   @ApiProperty()
   @IsString()

@@ -1,3 +1,4 @@
+import { GenderEnum } from 'src/enums/gender_enum';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Timestamp, Unique, UpdateDateColumn } from 'typeorm';
 
 @Entity('users')
@@ -12,12 +13,8 @@ export class User {
   @Column({ type: 'varchar' })
   email: string;
 
-  @Column({
-    type: 'enum',
-    enum: ['male', 'female', 'notSpecified'],
-    default: 'notSpecified',
-  })
-  gender: string;
+  @Column({ type: 'enum', enum: GenderEnum, default: GenderEnum.NOTSPECIFIED })
+  gender: GenderEnum;
 
   @Column({ type: 'enum', enum: ['user', 'admin'], default: 'user' })
   userType: string;

@@ -33,6 +33,9 @@ http://localhost:3000/api/v1/ -----------> Base URL
 http://localhost:3000/api ---------------> Swagger
 
 
+============================================================= Get
+ git commit -m --------> Refactor User GenderEnum
+
 ============================================================= Todos
 - Check dotenv configuration
 - Upload project to server

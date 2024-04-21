@@ -2,6 +2,7 @@ import { Optional } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MinLength, Validate } from 'class-validator';
 import { StrongPassword } from 'src/core/validation/strong_password_validator';
+import { GenderEnum } from 'src/enums/gender_enum';
 
 export class CreateUserDto {
   @ApiProperty()
@@ -19,12 +20,17 @@ export class CreateUserDto {
   @Optional()
   otpCode: string;
 
-  @ApiProperty()
+  // @ApiProperty()
+  // @IsOptional()
+  // @IsEnum(['male', 'female', 'notSpecified'], {
+  //   message: 'Please enter your gender (male, female, notSpecified)',
+  // })
+  // gender: string;
+
+  @ApiProperty({ enum: GenderEnum, enumName: 'Gender' })
   @IsOptional()
-  @IsEnum(['male', 'female', 'notSpecified'], {
-    message: 'Please enter your gender (male, female, notSpecified)',
-  })
-  gender: string;
+  @IsEnum(GenderEnum)
+  gender: GenderEnum;
 
   @ApiProperty()
   @IsString()
