@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
+import { RoleEnum } from 'src/auth/guard/role.enum';
 import { GenderEnum } from 'src/enums/gender_enum';
 
 export class UserDto {
@@ -21,8 +22,8 @@ export class UserDto {
 
   @ApiProperty()
   @Expose()
-  userType: string;
-  
+  userType: RoleEnum;
+
   @ApiProperty()
   @Expose()
   isActive: boolean;

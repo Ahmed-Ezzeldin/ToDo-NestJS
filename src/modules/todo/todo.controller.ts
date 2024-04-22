@@ -4,7 +4,7 @@ import { CreateTodoDto } from './dtos/create_todo.dto';
 import { UpdateTodoDto } from './dtos/update_todo.dto';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { Roles } from 'src/auth/guard/role.decorator';
-import { Role } from 'src/auth/guard/role.enum';
+import { RoleEnum } from 'src/auth/guard/role.enum';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
 import { GetUser, UserData } from 'src/auth/guard/get_user.decorator';
 import { I18nContext } from 'nestjs-i18n/dist/i18n.context';
@@ -21,7 +21,7 @@ export class TodoController {
   }
 
   @UseGuards(RolesGuard)
-  @Roles(Role.Admin)
+  @Roles(RoleEnum.Admin)
   @Get()
   async findAllTodos() {
     // AppLogger.logDivider(process.env.JWT_SECRET_KEY);

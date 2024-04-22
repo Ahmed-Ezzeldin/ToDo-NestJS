@@ -34,7 +34,7 @@ http://localhost:3000/api ---------------> Swagger
 
 
 ============================================================= Get
- git commit -m --------> Refactor User GenderEnum
+ git commit -m --------> 
 
 ============================================================= Todos
 - Check dotenv configuration

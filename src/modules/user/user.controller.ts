@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create_user.dto';
@@ -16,6 +17,9 @@ import { Serialize } from 'src/core/interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { I18nContext } from 'nestjs-i18n/dist/i18n.context';
 import { ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/auth/guard/role.decorator';
+import { RolesGuard } from 'src/auth/guard/roles.guard';
+import { RoleEnum } from 'src/auth/guard/role.enum';
 
 @Serialize(UserDto)
 @ApiTags('user')
@@ -32,6 +36,8 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  @UseGuards(RolesGuard)
+  @Roles(RoleEnum.Admin)
   @Get('/:id')
   async findUserById(@Param('id') id: string) {
     const user = await this.userService.findOne(parseInt(id));
