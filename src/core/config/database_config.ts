@@ -13,7 +13,7 @@ export const dbConfig: TypeOrmModuleOptions = {
   database: 'todo_db_giua',
   username: 'postgres_user',
   password: 'yjdOq5mpCsdgzfFYHBIPjbHyht0rCD5x',
-  host: 'postgres://postgres_user:yjdOq5mpCsdgzfFYHBIPjbHyht0rCD5x@dpg-comfhmq1hbls73f2n3ng-a.oregon-postgres.render.com/todo_db_giua',
+  host: 'postgres://postgres_user:yjdOq5mpCsdgzfFYHBIPjbHyht0rCD5x@dpg-comfhmq1hbls73f2n3ng-a/todo_db_giua',
   //   entities: ['dist/**/*.entity{.ts,.js}'],
   entities: [Todo, User],
 };
