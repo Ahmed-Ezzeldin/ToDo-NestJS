@@ -8,11 +8,12 @@ export const dbConfig: TypeOrmModuleOptions = {
   // database: 'Todo_db',
   // username: 'postgres',
   // password: '123456789',
+  // host: '127.0.0.1',
   port: 5432,
   database: 'todo_db_giua',
   username: 'postgres_user',
   password: 'yjdOq5mpCsdgzfFYHBIPjbHyht0rCD5x',
-  host: '127.0.0.1',
+  host: 'postgres://postgres_user:yjdOq5mpCsdgzfFYHBIPjbHyht0rCD5x@dpg-comfhmq1hbls73f2n3ng-a.oregon-postgres.render.com/todo_db_giua',
   //   entities: ['dist/**/*.entity{.ts,.js}'],
   entities: [Todo, User],
 };
