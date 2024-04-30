@@ -24,6 +24,7 @@ async function bootstrap() {
   await app.listen(3000);
   AppLogger.logColor(`TodoApp is listending to url ${await app.getUrl()}`, 'magenta');
 }
+
 bootstrap();
 
 /*

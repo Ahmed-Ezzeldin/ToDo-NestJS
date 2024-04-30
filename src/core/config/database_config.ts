@@ -2,13 +2,24 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Todo } from 'src/entity/todo.entity';
 import { User } from 'src/entity/user.entity';
 
+// export const dbConfigLocal: TypeOrmModuleOptions = {
+//   type: 'postgres',
+//   port: 5433,
+//   database: 'Todo_db',
+//   username: 'postgres',
+//   password: '123456789',
+//   host: '127.0.0.1',
+//   //   entities: ['dist/**/*.entity{.ts,.js}'],
+//   entities: [Todo, User],
+// };
+
 export const dbConfigLocal: TypeOrmModuleOptions = {
   type: 'postgres',
-  port: 5433,
-  database: 'Todo_db',
-  username: 'postgres',
-  password: '123456789',
-  host: '127.0.0.1',
+  port: parseInt(process.env.DB_PORT),
+  database: process.env.DB_NAME,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
   //   entities: ['dist/**/*.entity{.ts,.js}'],
   entities: [Todo, User],
 };
