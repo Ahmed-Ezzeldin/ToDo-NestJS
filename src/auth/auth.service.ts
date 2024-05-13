@@ -14,6 +14,7 @@ import { ForgetPasswordDto } from './dtos/forget_assword.dto';
 import { ResetPasswordDto } from './dtos/reset_assword.dto';
 import { I18nContext } from 'nestjs-i18n/dist/i18n.context';
 import { RandomHelper } from 'src/core/helpers/random_helper';
+import { CheckOtpDto } from './dtos/check_otp.dto';
 
 @Injectable()
 export class AuthService {
@@ -44,6 +45,10 @@ export class AuthService {
       email: user.email,
       userType: user.userType,
     };
+
+    delete user.password;
+    delete user.otpCode;
+
     return {
       ...user,
       accessToken: await this.jwtService.signAsync(payload),
@@ -142,6 +147,27 @@ export class AuthService {
     ]);
     return {
       message: this.i18n.t('messages.Otp_Sent'),
+    };
+  }
+
+  async checkOtp(checkOtpDto: CheckOtpDto) {
+    const user = await this.userService.findByEmail(checkOtpDto.email);
+    if (!user) {
+      throw new UnauthorizedException({
+        message: this.i18n.t('messages.User_Not_Exist'),
+        statusCode: 401,
+      });
+    }
+
+    if (user.otpCode !== checkOtpDto.otpCode) {
+      throw new UnauthorizedException({
+        message: this.i18n.t('messages.Incorrect_OTP'),
+        statusCode: 401,
+      });
+    }
+
+    return {
+      message: this.i18n.t('messages.Otp_Check'),
     };
   }
 

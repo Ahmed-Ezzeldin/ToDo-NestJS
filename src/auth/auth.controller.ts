@@ -9,6 +9,7 @@ import { VerifyEmailDto } from './dtos/verify_email.dto';
 import { ForgetPasswordDto } from './dtos/forget_assword.dto';
 import { ResetPasswordDto } from './dtos/reset_assword.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { CheckOtpDto } from './dtos/check_otp.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -38,6 +39,11 @@ export class AuthController {
   @Post('resetPassword')
   async resetPassword(@Body() body: ResetPasswordDto) {
     return this.authService.resetPassword(body);
+  }
+
+  @Post('checkOtp')
+  async checkOtp(@Body() body: CheckOtpDto) {
+    return this.authService.checkOtp(body);
   }
 
   @UseGuards(AuthGuard)

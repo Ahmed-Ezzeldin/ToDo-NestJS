@@ -7,6 +7,7 @@
     "Incorrect_OTP": "Otp code is incorrect",
     "Email_Verified": "Email verified successfully",
     "Otp_Sent": "Otp Code sent to your email",
+    "Otp_Check": "OTP code checked successfully",
     "Password_Reset": "Password reset successfully",
     "New_Password_Should_Not_Equal": "New password should not be equal to old password",
     "Old_Password_Incorrect": "Old password is incorrect",
